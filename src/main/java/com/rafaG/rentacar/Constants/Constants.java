@@ -20,13 +20,25 @@ public interface Constants {
         public static final String FECHA_VENC ="fecha_venc";
         public static final String CREATED_AT ="created_at";
         public static final  String UPDATED_AT = "updated_at";
+
     //CLOSE
     //Constantes relacionadas a los mensajes que se le envian al usuario
     public static final  String TYPE = "type";
-    public static final  String MESSAGE = "message";
+    public static final  String TYPE_GET = "type_get";
     public static final  String TYPE_REGISTER = "type_register";
-    public static final  String ERROR_REGISTER = "error_register";
+    public static final  String TYPE_LOGIN= "type_login";
+    public static final  String TYPE_UPDATE = "type_update";
+    public static final  String TYPE_DELETE = "type_delete";
+    public static final  String ERROR_USER  = "error_user";
+    public static final  String DATA = "data";
+    public static final  String MESSAGE = "message";
     public static final  String REGISTER_CLEAR = "El registro ha sido creado correctamente para el usuario: ";
     public static final  String REGISTER_FAILED = "El registro ha fallado, intentelo de nuevo";
+    public static final  String LOGIN_CLEAR = "El login se ha procesado correctamente";
+    public static final  String LOGIN_FAILED = "EL login ha fallado, intentelo de nuevo";
 
+    public static final  String UPDATE_CLEAR = "Se ha sido actualizado correctamente el usuario: ";
+    public static final  String UPDATE_FAILED= "La actualizacion del usuario ha fallado. Intente mas tarde";
+    public static final  String DELETE_CLEAR= "Se ha eliminado correctamente";
+    public static final  String DELETE_FAILED= "Ha habido errores en borrar su elemento";
 }
