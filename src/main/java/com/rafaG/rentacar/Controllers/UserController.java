@@ -1,5 +1,4 @@
 package com.rafaG.rentacar.Controllers;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rafaG.rentacar.Constants.Constants;
 import com.rafaG.rentacar.Models.User;
@@ -13,7 +12,9 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+
 @RequestMapping("api")
+@CrossOrigin(origins = "*")
 public class UserController implements Constants {
     @Autowired
     private UserDao userDao;
@@ -38,27 +39,6 @@ public class UserController implements Constants {
             e.printStackTrace();
             response.put(TYPE,ERROR_USER);
             response.put(MESSAGE,"No se encontró un usuario con el ID: "+id);
-            return response;
-        }
-    }
-    @RequestMapping(value="create-user",method = RequestMethod.POST)
-    public Map<String,Object> createUser(@RequestBody String userData){
-        Map<String,Object> json = new HashMap<>();
-        Map<String,Object> response = new HashMap<>();
-        try{
-            json = new ObjectMapper().readerFor(Map.class).readValue(userData);
-           String valueResponseRegister =  userService.registerUser(json);
-           if(valueResponseRegister.equals(null)){
-               throw new Exception("Error en el registro");
-           }
-            response.put(TYPE,TYPE_REGISTER);
-            response.put(MESSAGE,REGISTER_CLEAR+valueResponseRegister);
-           return response;
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            response.put(TYPE,ERROR_USER);
-            response.put(MESSAGE,REGISTER_FAILED);
             return response;
         }
     }
@@ -95,12 +75,14 @@ public class UserController implements Constants {
                 if(id<=0 || !isDeletedUser) throw  new Exception("Nueva excepcion");
                 response.put(TYPE,TYPE_DELETE);
                 response.put(MESSAGE,DELETE_CLEAR);
+                response.put(DATA, true);
                 return response;
             }
             catch (Exception e){
                 e.printStackTrace();
                 response.put(TYPE,ERROR_USER);
                 response.put(MESSAGE,DELETE_FAILED);
+                response.put(DATA, false);
                 return response;
             }
     }

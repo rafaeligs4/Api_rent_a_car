@@ -31,7 +31,10 @@ public interface Constants {
     public static final  String TYPE_DELETE = "type_delete";
     public static final  String ERROR_USER  = "error_user";
     public static final  String DATA = "data";
+    public static final  String STATUS= "status";
     public static final  String MESSAGE = "message";
+    public static final  boolean CLEAR = true;
+    public static final  boolean FAILED = false;
     public static final  String REGISTER_CLEAR = "El registro ha sido creado correctamente para el usuario: ";
     public static final  String REGISTER_FAILED = "El registro ha fallado, intentelo de nuevo";
     public static final  String LOGIN_CLEAR = "El login se ha procesado correctamente";

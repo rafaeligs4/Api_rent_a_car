@@ -6,16 +6,15 @@ import com.rafaG.rentacar.Models.User;
 import com.rafaG.rentacar.Services.UserService;
 import com.rafaG.rentacar.Utils.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("api")
+@RequestMapping("auth")
+@CrossOrigin(origins = "*")
+
 public class AuthController implements Constants {
 
     @Autowired
@@ -56,4 +55,29 @@ public class AuthController implements Constants {
             return  response;
         }
     }
+
+    @RequestMapping(value="create-user",method = RequestMethod.POST)
+    public Map<String,Object> createUser(@RequestBody String userData){
+        Map<String,Object> json = new HashMap<>();
+        Map<String,Object> response = new HashMap<>();
+        try{
+            json = new ObjectMapper().readerFor(Map.class).readValue(userData);
+            String valueResponseRegister =  userService.registerUser(json);
+            if(valueResponseRegister.equals(null)){
+                throw new Exception("Error en el registro");
+            }
+            response.put(TYPE,TYPE_REGISTER);
+            response.put(MESSAGE,REGISTER_CLEAR+valueResponseRegister);
+            response.put(STATUS, CLEAR);
+            return response;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            response.put(TYPE,ERROR_USER);
+            response.put(MESSAGE,REGISTER_FAILED);
+            response.put(STATUS, FAILED);
+            return response;
+        }
+    }
+
 }
