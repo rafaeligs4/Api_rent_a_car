@@ -42,6 +42,7 @@ public class AuthController implements Constants {
             //#4 Generamos el JWT Y LO ENVIAMOS AL USUARIO
             System.out.println(user);
             String jwt = jwtUtil.create(String.valueOf(user.getId()),user.getEmail());
+            System.out.println(jwtUtil.getValue(jwt));
             response.put(TYPE,TYPE_LOGIN);
             response.put(MESSAGE,LOGIN_CLEAR);
             response.put("JWT",jwt);
