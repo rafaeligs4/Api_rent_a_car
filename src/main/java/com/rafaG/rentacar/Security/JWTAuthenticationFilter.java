@@ -7,16 +7,18 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.NoArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.io.IOException;
 import java.util.Collections;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-
+    @Override
     public Authentication attemptAuthentication(
             HttpServletRequest request,
             HttpServletResponse response) throws AuthenticationException {
@@ -30,20 +32,29 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 user.getPassword(),
                 Collections.emptyList()
         );
-
-    return getAuthenticationManager().authenticate(usernamePAT);
+        System.out.println("HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        System.out.println("User: "+user.getEmail());
+        System.out.println(new BCryptPasswordEncoder().encode(user.getPassword()));
+        System.out.println("Pass: "+user.getPassword());
+        System.out.println(usernamePAT.toString());
+        return getAuthenticationManager().authenticate(usernamePAT);
     }
 
-    protected void succesfullAuthentication(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            FilterChain chain,
-            Authentication auth) throws IOException, ServletException {
+    @Override
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException, NullPointerException {
+        JWTUtil jwt = new JWTUtil();
 
-        User userCred = (User) auth.getPrincipal();
-        String jwt = new JWTUtil().create("1212",userCred.getEmail());
+        UserDetailsImp userCred = (UserDetailsImp) authResult.getPrincipal();
 
-        response.addHeader("Authorization", "Barrer "+jwt);
-        super.successfulAuthentication(request,response,chain,auth);
+        String token = jwt.create(String.valueOf(userCred.getId()),userCred.getUsername());
+        System.out.println("User Credenciales: "+userCred.getUsername());
+        System.out.println("User ID: "+String.valueOf(userCred.getId()));
+
+        System.out.println("JWT: "+token);
+        response.addHeader("Authorization", "Barrer "+token);
+        response.getWriter().flush();
+        super.successfulAuthentication(request, response, chain, authResult);
     }
+
+
 }

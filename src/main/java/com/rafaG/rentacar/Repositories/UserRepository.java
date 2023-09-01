@@ -99,4 +99,20 @@ public class UserRepository implements UserDao {
 
     }
 
+    public User getUerByEmail(String username){
+        try{
+            String query =  "FROM User WHERE email=:email";
+            List<User> user = new ArrayList<>();
+            user = entityManager.createQuery(query)
+                    .setParameter("email",username)
+                    .getResultList();
+            if(user.isEmpty()) throw new NullPointerException("Ex");
+            return user.get(0);
+        }
+
+        catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

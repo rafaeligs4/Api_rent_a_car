@@ -22,13 +22,13 @@ import java.util.Date;
 @Component
 public class JWTUtil {
     @Value("${security.jwt.secret}")
-    private String key;
+    private String key="holaholagoal";
 
     @Value("${security.jwt.issuer}")
     private String issuer;
 
     @Value("${security.jwt.ttlMillis}")
-    private long ttlMillis;
+    private long ttlMillis=86400000;
 
     private final Logger log = LoggerFactory
             .getLogger(JWTUtil.class);
