@@ -101,7 +101,9 @@ public class UserRepository implements UserDao {
 
     public User getUerByEmail(String username){
         try{
+            System.out.println("User name: "+username);
             String query =  "FROM User WHERE email=:email";
+
             List<User> user = new ArrayList<>();
             user = entityManager.createQuery(query)
                     .setParameter("email",username)

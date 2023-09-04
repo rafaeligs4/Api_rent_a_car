@@ -14,7 +14,6 @@ import java.util.Map;
 @RestController
 
 @RequestMapping("api")
-@CrossOrigin(origins = "*")
 public class UserController implements Constants {
     @Autowired
     private UserDao userDao;

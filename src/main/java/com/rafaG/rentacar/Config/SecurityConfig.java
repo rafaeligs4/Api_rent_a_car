@@ -1,5 +1,8 @@
-package com.rafaG.rentacar.Security;
+package com.rafaG.rentacar.Config;
 
+import com.rafaG.rentacar.Constants.Constants;
+import com.rafaG.rentacar.Security.JWTAuthenticationFilter;
+import com.rafaG.rentacar.Security.JWTAuthorizationFilter;
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 import lombok.AllArgsConstructor;
@@ -23,7 +26,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @AllArgsConstructor
 
-public class SecurityConfig{
+public class SecurityConfig implements Constants {
 
     private final UserDetailsService userDetailsService;
     private final JWTAuthorizationFilter AUTHORIZATION_FILTER;
@@ -31,15 +34,18 @@ public class SecurityConfig{
     SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authManager) throws Exception {
         JWTAuthenticationFilter jwtAuthenticationFilter = new JWTAuthenticationFilter();
         jwtAuthenticationFilter.setAuthenticationManager(authManager);
-        jwtAuthenticationFilter.setFilterProcessesUrl("/login");
+        jwtAuthenticationFilter.setFilterProcessesUrl(LOGIN);
         return http
+                .cors()
+                .and()
                 .csrf(csrf->csrf
                         .disable()
                 )
                 .authorizeHttpRequests((authorize) -> authorize
-                        .anyRequest().authenticated())
-                .httpBasic()
-                .and()
+                        .requestMatchers("auth/**").permitAll()
+                        .anyRequest().authenticated()
+
+                )
                 .sessionManagement(session->session
                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                         )

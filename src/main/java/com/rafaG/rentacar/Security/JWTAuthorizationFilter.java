@@ -22,8 +22,8 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
 
         String barreerToken = request.getHeader("Authorization");
-        if(barreerToken != null && barreerToken.startsWith("Barrer")){
-            String token = barreerToken.replace("Barrer","");
+        if(barreerToken != null && barreerToken.startsWith("Bearer")){
+            String token = barreerToken.replace("Bearer","");
             UsernamePasswordAuthenticationToken usernamePat =new JWTUtil().getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(usernamePat);
 

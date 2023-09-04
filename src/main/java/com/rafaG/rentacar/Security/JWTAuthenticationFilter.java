@@ -51,7 +51,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         System.out.println("User ID: "+String.valueOf(userCred.getId()));
 
         System.out.println("JWT: "+token);
-        response.addHeader("Authorization", "Barrer "+token);
+        response.addHeader("Authorization", "Bearer "+token);
         response.getWriter().flush();
         super.successfulAuthentication(request, response, chain, authResult);
     }

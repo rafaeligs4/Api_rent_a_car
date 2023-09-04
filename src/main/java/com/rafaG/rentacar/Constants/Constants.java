@@ -44,4 +44,8 @@ public interface Constants {
     public static final  String UPDATE_FAILED= "La actualizacion del usuario ha fallado. Intente mas tarde";
     public static final  String DELETE_CLEAR= "Se ha eliminado correctamente";
     public static final  String DELETE_FAILED= "Ha habido errores en borrar su elemento";
+    //************ SECCION DE RUTAS DE ENDPOINTS*************//
+    public static final String LOGIN = "/login";
+    public static final String LOCALHOST_NG = "http://localhost:4200";
+
 }
