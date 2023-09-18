@@ -11,9 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
-@RestController
 @RequestMapping("auth")
-
+@RestController
 public class AuthController implements Constants {
 
     @Autowired
@@ -56,7 +55,7 @@ public class AuthController implements Constants {
 //        }
 //    }
 
-    @RequestMapping(value="create-user",method = RequestMethod.POST)
+    @RequestMapping(value="register",method = RequestMethod.POST)
     public Map<String,Object> createUser(@RequestBody String userData){
         Map<String,Object> json = new HashMap<>();
         Map<String,Object> response = new HashMap<>();
@@ -79,5 +78,6 @@ public class AuthController implements Constants {
             return response;
         }
     }
+
 
 }

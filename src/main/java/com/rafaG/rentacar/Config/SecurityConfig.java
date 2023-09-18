@@ -21,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -42,7 +43,7 @@ public class SecurityConfig implements Constants {
                         .disable()
                 )
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("auth/**").permitAll()
+                        .requestMatchers("/auth/**").permitAll()
                         .anyRequest().authenticated()
 
                 )
@@ -51,6 +52,9 @@ public class SecurityConfig implements Constants {
                         )
                 .addFilter(jwtAuthenticationFilter)
                 .addFilterBefore(AUTHORIZATION_FILTER, UsernamePasswordAuthenticationFilter.class)
+                .logout((logout) -> logout
+                        .logoutSuccessUrl("/auth/logout")
+                        .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler()))
                 .build();
     }
 //    @Bean
